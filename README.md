@@ -14,7 +14,7 @@ Shown info:
 <li>Type libraries (if available)</li>
 <li>Type library registration information (if available)</li>
 <li>Manifest (if available)</li>
-<li>System info (CPU model/stepping/futures, mb manufacturer/model, some OS properties)</li>
+<li>System info (CPU properties, mb manufacturer/model, some OS properties)</li>
 </ul>
 Examples:
 Self explore screenshots:
