@@ -1,0 +1,71 @@
+HKCR
+{
+	PE32Viewer.CoPE32Viewer.1 = s 'CoPE32Viewer Class'
+	{
+		CLSID = s '{3DD4738C-DFDB-4C82-B952-A7985EC5F4F7}'
+	}
+	PE32Viewer.CoPE32Viewer = s 'CoPE32Viewer Class'
+	{
+		CLSID = s '{3DD4738C-DFDB-4C82-B952-A7985EC5F4F7}'
+		CurVer = s 'PE32Viewer.CoPE32Viewer.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {3DD4738C-DFDB-4C82-B952-A7985EC5F4F7} = s 'CoPE32Viewer Class'
+		{
+			ProgID = s 'PE32Viewer.CoPE32Viewer.1'
+			VersionIndependentProgID = s 'PE32Viewer.CoPE32Viewer'
+			ForceRemove Programmable
+			InprocServer32 = s '%MODULE%'
+			{
+				val ThreadingModel = s 'Apartment'
+			}
+			TypeLib = s '{4C0A29AF-0961-45E0-A28B-3D7347687146}'
+			Version = s '1.0'
+			shellex
+			{
+				MayChangeDefaultMenu
+			}
+		}
+	}
+	NoRemove Exefile
+	{
+		NoRemove ShellEx
+		{
+			NoRemove ContextMenuHandlers
+			{
+				ForceRemove PE32Viewer = s '{3DD4738C-DFDB-4C82-B952-A7985EC5F4F7}'
+			}
+		}
+	}
+	NoRemove Dllfile
+	{
+		NoRemove ShellEx
+		{
+			NoRemove ContextMenuHandlers
+			{
+				ForceRemove PE32Viewer = s '{3DD4738C-DFDB-4C82-B952-A7985EC5F4F7}'
+			}
+		}
+	}
+	NoRemove Sysfile
+	{
+		NoRemove ShellEx
+		{
+			NoRemove ContextMenuHandlers
+			{
+				ForceRemove PE32Viewer = s '{3DD4738C-DFDB-4C82-B952-A7985EC5F4F7}'
+			}
+		}
+	}
+	NoRemove OCXfile
+	{
+		NoRemove ShellEx
+		{
+			NoRemove ContextMenuHandlers
+			{
+				ForceRemove PE32Viewer = s '{3DD4738C-DFDB-4C82-B952-A7985EC5F4F7}'
+			}
+		}
+	}
+}
