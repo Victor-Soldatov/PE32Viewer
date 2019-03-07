@@ -1,0 +1,234 @@
+// PE32Viewer.idl : IDL source for PE32Viewer
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (PE32Viewer.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+import "shobjidl.idl";
+
+typedef [uuid(D10C7371-9D22-471E-A0EC-B5CA4B88F908), version(1.0), helpstring("PE32Viewer version info structure")]
+struct PE32VIEW_VERSION
+{
+	[helpstring("Major version number")]														unsigned long dwVerMajor;
+	[helpstring("Minor version info")]															unsigned long dwVerMinor;
+	[helpstring("Build version number")]														unsigned long dwVerBuildNo;
+	[helpstring("Special version number")]														unsigned long dwVerSpecialNo;
+}
+PE32VIEW_VERSION;
+
+[
+	object,
+	uuid(C4CFC677-4ACB-4467-ADA9-B2B5A5472B13),
+	oleautomation,
+	nonextensible,
+	pointer_default(unique),
+	helpstring("PE32Viewer version info interface (for checking/testing purposes)")
+]
+interface IPE32Viewer : IUnknown{
+	[id(1)] HRESULT GetVersion([out,retval] LONG* plVersion);
+	[id(2)] HRESULT GetVersionEx([out,retval] PE32VIEW_VERSION* psVersionEx);
+};
+
+typedef [uuid(9E051683-F27F-4282-A422-1B58F25C5686), v1_enum, helpstring("Bound state")]
+enum __tagPE32BOUND_STATE
+{
+	bsBounded = -1,
+	bsUnbounded = 0
+}
+PE32BOUND_STATE;
+
+typedef [uuid(AC8A8DC0-D9D4-490E-9333-B40F89A48A64), v1_enum, helpstring("Kind of import")]
+enum __tagPE32IMPORT_KIND
+{
+	ikByOrdinal = -1,
+	ikByName = 0
+}
+PE32IMPORT_KIND;
+
+typedef [uuid(78914C50-3DB1-47C5-BCCB-CE89A006FE5A), v1_enum, helpstring("Import forward state")]
+enum __tagPE32IMPORT_FORWARD_STATE
+{
+	fsForwarded = -1,
+	fsNotForwarded = 0
+}
+PE32IMPORT_FORWARD_STATE;
+
+typedef [uuid(F34DBE54-87B6-4021-A4E8-0FC8CE3C3001), version(1.0), helpstring("PE32 import item description structure")]
+struct __PEIMGIMPORTITEM
+{
+	unsigned long dwStructSize;
+	PE32BOUND_STATE BoundState;
+	PE32IMPORT_KIND ImportKind;
+	char* pAnsiName;
+	unsigned long dwOrdinal;
+	PE32IMPORT_FORWARD_STATE ForwardState;
+	short wHint;
+}
+__PEIMGIMPORTITEM;
+
+typedef [uuid(D31017B0-1FAF-468F-832D-31F6711B9326), version(1.0), helpstring("PE32 export item description structure")]
+struct __PEIMGEXPORTITEM
+{
+	unsigned long dwStructSize;
+	char* pAnsiName;
+	unsigned long dwOrdinal;
+	PE32IMPORT_FORWARD_STATE ForwardState;
+	char* pForwardedName;
+}
+__PEIMGEXPORTITEM;
+
+typedef [uuid(C4E63320-C535-4C16-A87D-C0373D188F79), v1_enum, helpstring("Resource ID type")]
+enum __tagPE32RES_ID_TYPE
+{
+	rtByString = -1,
+	fsByNum = 0
+}
+PE32RES_ID_TYPE;
+
+typedef [uuid(5EF101AA-25F3-4186-991A-AE0AB2E985A7), version(1.0), helpstring("PE32 resource item description structure")]
+struct __PEIMGRESOURCEITEM
+{
+	unsigned long dwStructSize;
+	PE32RES_ID_TYPE ResIDType;
+	unsigned long dwID;
+	BSTR pwszName;
+	LCID lcid;
+	unsigned long dwCodePage;
+	unsigned long dwResItemDataSize;
+	byte* lpResItemDataPtr;
+}
+__PEIMGRESOURCEITEM;
+
+typedef [uuid(2508933B-62E5-45C8-B597-A09742B19D2F), version(1.0), helpstring("PE32 resource typelib description structure")]
+struct __PEIMGRESTYPELIBITEM
+{
+	unsigned long dwStructSize;
+	BSTR bstrShortName;
+	BSTR bstrFullName;
+	unsigned long ulReserved;
+}
+__PEIMGRESTYPELIBITEM;
+
+[
+	object,
+	uuid(34155BED-A96B-45A4-A4E5-2C517A052678),
+	oleautomation,
+	nonextensible,
+	pointer_default(unique),
+	helpstring("PE32 import symbols enumerator interface")
+]
+interface IPE32ImportsCallback : IUnknown{
+	[id(1), helpstring("PE32 import symbols enumerator callback method")] HRESULT EnumPE32ImportSymbols([in] BSTR pwszModuleName, [in] __PEIMGIMPORTITEM* pItemDesc, [in] byte* pContext);
+};
+
+[
+	object,
+	uuid(8894E1F7-28F3-43AA-814E-D9F9814844DF),
+	oleautomation,
+	nonextensible,
+	pointer_default(unique),
+	helpstring("PE32 export symbols enumerator interface")
+]
+interface IPE32ExportsCallback : IUnknown{
+	[id(1), helpstring("PE32 export symbols enumerator callback method")] HRESULT EnumPE32ExportSymbols([in] unsigned long nIndex, [in] __PEIMGEXPORTITEM* pItemDesc, [in] byte* pContext);
+};
+
+[
+	object,
+	uuid(DA256CF7-CBB1-4D71-8906-1CCB06B1A1AC),
+	oleautomation,
+	nonextensible,
+	pointer_default(unique),
+	helpstring("PE32 certificates enumerator interface")
+]
+interface IPE32CertificatesCallback : IUnknown{
+	[id(1), helpstring("PE32 certificates enumerator callback method")] HRESULT EnumPE32Certificates([in] unsigned long dwIndex, [in] BSTR pwszCertSubject, [in] byte* pContext);
+};
+
+[
+	object,
+	uuid(4A893140-624A-438A-9F22-697D6D91F2FC),
+	oleautomation,
+	nonextensible,
+	pointer_default(unique),
+	helpstring("PE32 resource items enumerator interface")
+]
+interface IPE32ResourcesCallback : IUnknown{
+	[id(1), helpstring("PE32 resource items enumerator (types) callback method")] HRESULT EnumPE32ResourcesTypes([in] unsigned long dwResType, [in] BSTR bstrResTypeName, [in] byte* pContext);
+	[id(2), helpstring("PE32 resource items enumerator (by type) callback method")] HRESULT EnumPE32ResourcesByType([in] unsigned long dwResType, [in] __PEIMGRESOURCEITEM* pResItemDesc, [in] byte* pContext);
+};
+
+[
+	object,
+	uuid(E7EA88AB-250B-4265-804F-BAF1112ECBED),
+	oleautomation,
+	nonextensible,
+	pointer_default(unique),
+	helpstring("PE32 string resources enumerator interface")
+]
+interface IPE32StringsCallback : IUnknown{
+	[id(1), helpstring("PE32 string resources enumerator callback method")] HRESULT EnumPE32StringResources([in] LCID lcid, [in] DWORD dwID, [in] byte* pResData, [in] DWORD dwStringLen, [in] BSTR pwszString, [in] byte* pContext);
+};
+
+[
+	object,
+	uuid(05DA8F49-D036-4CD2-8ABA-46223A26BBF5),
+	oleautomation,
+	nonextensible,
+	pointer_default(unique),
+	helpstring("PE32 string resources enumerator interface")
+]
+interface IPE32MessagesCallback : IUnknown{
+	[id(1), helpstring("PE32 message table resource items enumerator callback method")] HRESULT EnumPE32MsgTableItemsResources([in] LCID lcid, [in] DWORD dwMsgID, [in] byte* pResData, [in] DWORD dwID, [in] DWORD dwStringLen, [in] BSTR pwszString, [in] byte* pContext);
+};
+
+[
+	object,
+	uuid(9733C31C-CEE7-41F0-A56F-FDAE94BE47D9),
+	oleautomation,
+	nonextensible,
+	pointer_default(unique),
+	helpstring("PE32 embedded type library resources enumerator interface")
+]
+interface IPE32TypelibCallback : IUnknown{
+	[id(1), helpstring("PE32 embedded type library resource unit callback method")] HRESULT EnumPE32Typelib([in] __PEIMGRESTYPELIBITEM* pTypelibDesc, [in] byte* pContext);
+};
+
+typedef [uuid(E050ED46-94D2-40D5-BA49-AA8F4D8CDBA4), version(1.0), helpstring("PE32 version info translations list of language and code page identifier pairs structure")]
+struct LANGANDCODEPAGE 
+{
+	short wLanguage;
+	short wCodePage;
+} 
+LANGANDCODEPAGE;
+
+[
+	object,
+	uuid(E14716C2-7086-49DB-8DB8-95A5BDF83472),
+	oleautomation,
+	nonextensible,
+	pointer_default(unique),
+	helpstring("PE32 version resource enumerator interface")
+]
+interface IPE32VersionCallback : IUnknown{
+	[id(1), helpstring("PE32 version resource available key/value pairs callback method")] HRESULT EnumPE32VersionStringTableStrings([in] unsigned short wLanguage, [in] unsigned short wCodePage, [in] BSTR bstrKey, [in] BSTR bstrValue, [in] byte* pContext);
+};
+
+[
+	uuid(4C0A29AF-0961-45E0-A28B-3D7347687146),
+	version(1.0),
+]
+library PE32ViewerLib
+{
+	importlib("stdole2.tlb");
+	[
+		uuid(3DD4738C-DFDB-4C82-B952-A7985EC5F4F7)		
+	]
+	coclass CoPE32Viewer
+	{
+		[default] interface IPE32Viewer;
+	};
+};
+
