@@ -22,5 +22,5 @@ Windows system files exploring screenshots ... accessibilitycpl.dll
 <p><img style="float:left;overflow: auto;" src=".\Images\win32kbase.sys.01.jpg.png" height="595" width="447"><img style="float:right;overflow: auto;" src=".\Images\win32kbase.sys.02.jpg.png" height="595" width="447"></p>
 <p><img style="float:left;overflow: auto;" src=".\Images\win32kbase.sys.03.jpg.png" height="595" width="447"><img style="float:right;overflow: auto;" src=".\Images\win32kbase.sys.04.jpg.png" height="595" width="447"></p>
 ... win32kfull.sys
-<p><img style="float:left;overflow: auto;" src=".\Images\win32kfull.sys.sys.01.jpg.png" height="595" width="447"><img style="float:right;overflow: auto;" src=".\Images\win32kfull.sys.02.jpg.png" height="595" width="447"></p>
+<p><img style="float:left;overflow: auto;" src=".\Images\win32kfull.sys.01.jpg.png" height="595" width="447"><img style="float:right;overflow: auto;" src=".\Images\win32kfull.sys.02.jpg.png" height="595" width="447"></p>
 <p style="width:50%;"><img style="margin: auto;" src=".\Images\win32kfull.sys.03.jpg.png" height="595" width="447"></p>
